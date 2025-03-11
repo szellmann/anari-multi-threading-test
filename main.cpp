@@ -299,7 +299,16 @@ int main()
   std::thread queryBoundsNoWaitThread([&]() {
     for (;;) {
       float bounds[6] = { 1e30f, 1e30f, 1e30f, -1e30f, -1e30f, -1e30f };
-      anari::getProperty(device, world, "bounds", bounds, ANARI_NO_WAIT);
+      int res = anariGetProperty(device,
+                       world, "bounds",
+                       ANARI_FLOAT32_BOX3,
+                       bounds,
+                       sizeof(bounds),
+                       ANARI_NO_WAIT);
+
+      if (!res) {
+        fprintf(stderr, "%s\n", "bounds property (no wait) query unsuccessful");
+      }
 
       if (finish_queryBoundsNoWait)
         break;
@@ -311,7 +320,16 @@ int main()
   std::thread queryBoundsWaitThread([&]() {
     for (;;) {
       float bounds[6] = { 1e30f, 1e30f, 1e30f, -1e30f, -1e30f, -1e30f };
-      anari::getProperty(device, world, "bounds", bounds, ANARI_WAIT);
+      int res = anariGetProperty(device,
+                       world, "bounds",
+                       ANARI_FLOAT32_BOX3,
+                       bounds,
+                       sizeof(bounds),
+                       ANARI_WAIT);
+
+      if (!res) {
+        fprintf(stderr, "%s\n", "bounds property (wait) query unsuccessful");
+      }
 
       if (finish_queryBoundsWait)
         break;
