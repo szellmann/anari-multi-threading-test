@@ -160,13 +160,16 @@ void initializeWorld(anari::Device device, anari::World world, const float3 &pos
       device, world, "surface", anari::newArray1D(device, &surface));
 #endif
   anari::release(device, surface);
-  anari::commitParameters(device, world);
 
   // Add a directional light source //
 
   auto light = anari::newObject<anari::Light>(device, "directional");
   anari::setParameterArray1D(device, world, "light", &light, 1);
   anari::release(device, light);
+
+  // Commit world //
+
+  anari::commitParameters(device, world);
 }
 
 // ========================================================
