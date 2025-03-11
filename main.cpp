@@ -245,8 +245,6 @@ int main()
   auto library = anari::loadLibrary("environment", statusFunc);
   auto device = anari::newDevice(library, "default");
 
-  std::mutex mtx;
-
   // Create world from a helper function //
 
   anari::World world = anari::newObject<anari::World>(device);
